@@ -15,9 +15,10 @@ namespace Purchase.Core.App
 
         public PurchaseServiceEFC(PurchaseCoreContext ctx) => _purchaseContext = ctx;
 
-        public async Task<DetailedPurchaseDTO> GetPurchase(ShortPurchaseDTO purchaseDTO)
+        public async Task<DetailedPurchaseDTO> GetPurchase(int id)
         {
-            var purchase = await _purchaseContext.Purchases.FindAsync(purchaseDTO.PurchaseId);
+            var purchase = await _purchaseContext.Purchases.Include(p => p.Category)
+                .SingleOrDefaultAsync(p => p.PurchaseId == id);
             return purchase == null ? null : ConvertPurchaseToDetailedPurchaseDTO(purchase);
         }
 
@@ -27,25 +28,24 @@ namespace Purchase.Core.App
             return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p));
         }
 
-        public async Task<DetailedPurchaseDTO> CreatePurchase(CreatePurchaseDTO purchaseDTO)
+        public async Task<PurchaseDTO> AddPurchase(CreatePurchaseDTO purchaseDTO)
         {
             _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));
             var purchase = _purchaseContext.Purchases.Add(new Models.Purchase());
             purchase.CurrentValues.SetValues(purchaseDTO);
             await SaveChanges();
-            return ConvertPurchaseToDetailedPurchaseDTO((Models.Purchase)purchase.CurrentValues.ToObject());
+            return ConvertPurchaseToPurchaseDTO((Models.Purchase)purchase.CurrentValues.ToObject());
         }
 
-        public async Task<ShortPurchaseDTO> DeletePurchase(ShortPurchaseDTO purchaseDTO)
+        public async Task<PurchaseDTO> DeletePurchase(int id)
         {
-            _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));
-            var purchase = await _purchaseContext.Purchases.FindAsync(purchaseDTO.PurchaseId);
+            var purchase = await _purchaseContext.Purchases.FindAsync(id);
             if (purchase == null)
                 return null;
 
             _purchaseContext.Purchases.Remove(purchase);
             await SaveChanges();
-            return purchaseDTO;
+            return ConvertPurchaseToPurchaseDTO(purchase);
         }
 
         public async Task<DetailedPurchaseDTO> EditPurchase(DetailedPurchaseDTO purchaseDTO)
@@ -87,11 +87,25 @@ namespace Purchase.Core.App
                 Price = purchase.Price,
                 Quantity = purchase.Quantity,
                 DoneAt = purchase.DoneAt,
-                CategoryDTO = new DetailedCategoryDTO
+                Category = new DetailedCategoryDTO
                 {
                     CategoryId = purchase.CategoryId,
-                    Name = purchase.Category.Name
+                    Name = purchase.Category.Name,
+                    Description = purchase.Category.Description
                 }
+            };
+        }
+
+        private static PurchaseDTO ConvertPurchaseToPurchaseDTO(Models.Purchase purchase)
+        {
+            return new PurchaseDTO
+            {
+                PurchaseId = purchase.PurchaseId,
+                Name = purchase.Name,
+                Price = purchase.Price,
+                Quantity = purchase.Quantity,
+                DoneAt = purchase.DoneAt,
+                CategoryId = purchase.CategoryId
             };
         }
     }

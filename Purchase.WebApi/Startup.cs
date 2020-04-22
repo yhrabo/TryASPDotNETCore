@@ -28,8 +28,8 @@ namespace Purchase.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PurchaseCoreContext>();
-            services.AddTransient<ICategoryService, CategoryServiceEFC>();
-            services.AddTransient<IPurchaseService, PurchaseServiceEFC>();
+            services.AddScoped<ICategoryService, CategoryServiceEFC>();
+            services.AddScoped<IPurchaseService, PurchaseServiceEFC>();
             services.AddControllers();
         }
 

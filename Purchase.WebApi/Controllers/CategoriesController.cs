@@ -43,7 +43,7 @@ namespace Purchase.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, DetailedCategoryDTO categoryDTO)
+        public async Task<IActionResult> ReplaceCategory(int id, DetailedCategoryDTO categoryDTO)
         {
             if (id != categoryDTO.CategoryId)
                 return BadRequest();
@@ -60,7 +60,7 @@ namespace Purchase.WebApi.Controllers
         {
             DetailedCategoryDTO category = await _categoryService.DeleteCategory(id);
             if (category == null)
-                NotFound();
+                return NotFound();
 
             return NoContent();
         }

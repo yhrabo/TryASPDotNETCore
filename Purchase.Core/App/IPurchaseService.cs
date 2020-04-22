@@ -8,10 +8,10 @@ namespace Purchase.Core.App
 {
     public interface IPurchaseService
     {
-        public Task<DetailedPurchaseDTO> GetPurchase(ShortPurchaseDTO purchaseDTO);
+        public Task<DetailedPurchaseDTO> GetPurchase(int id);
         public Task<IEnumerable<DetailedPurchaseDTO>> GetPurchases();
-        public Task<DetailedPurchaseDTO> CreatePurchase(CreatePurchaseDTO purchaseDTO);
-        public Task<ShortPurchaseDTO> DeletePurchase(ShortPurchaseDTO purchaseDTO);
+        public Task<PurchaseDTO> AddPurchase(CreatePurchaseDTO purchaseDTO);
+        public Task<PurchaseDTO> DeletePurchase(int id);
         public Task<DetailedPurchaseDTO> EditPurchase(DetailedPurchaseDTO purchaseDTO);
     }
 }

@@ -16,6 +16,11 @@ namespace Purchase.Core.Infrastructure.DTOs
         public int CategoryId { get; set; }
     }
 
+    public class PurchaseDTO : CreatePurchaseDTO
+    {
+        public int PurchaseId { get; set; }
+    }
+
     public class DetailedPurchaseDTO
     {
         public int PurchaseId { get; set; }
@@ -25,12 +30,6 @@ namespace Purchase.Core.Infrastructure.DTOs
         public uint Quantity { get; set; }
         public decimal TotalPrice { get { return Price * Quantity; } }
         public DateTime DoneAt { get; set; }
-        public int CategoryId { get; set; }
-        public DetailedCategoryDTO CategoryDTO { get; set; }
-    }
-
-    public class ShortPurchaseDTO
-    {
-        public int PurchaseId { get; set; }
+        public DetailedCategoryDTO Category { get; set; }
     }
 }

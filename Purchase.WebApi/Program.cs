@@ -18,7 +18,7 @@ namespace Purchase.WebApi
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
-                var ctx = scope.ServiceProvider.GetService<PurchaseCoreContext>();
+                var ctx = scope.ServiceProvider.GetRequiredService<PurchaseCoreContext>();
                 ctx.CreateAndSeedDb();
             }
             host.Run();
