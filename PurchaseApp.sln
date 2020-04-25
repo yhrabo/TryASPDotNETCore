@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Purchase.WebApi", "Purchase.WebApi\Purchase.WebApi.csproj", "{D6666152-9B01-47B3-B9E1-7183889FD9F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Purchase.WebApi", "Purchase.WebApi\Purchase.WebApi.csproj", "{D6666152-9B01-47B3-B9E1-7183889FD9F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Purchase.Core", "Purchase.Core\Purchase.Core.csproj", "{5A8BCB65-3667-489E-9D31-693951AD5642}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Purchase.Core", "Purchase.Core\Purchase.Core.csproj", "{5A8BCB65-3667-489E-9D31-693951AD5642}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

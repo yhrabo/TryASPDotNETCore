@@ -6,14 +6,24 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Purchase.Core.Infrastructure.DTOs;
 using Purchase.Core.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Localization;
 
 namespace Purchase.Core.App
 {
     public class PurchaseServiceEFC : IPurchaseService
     {
+        private readonly IStringLocalizer<PurchaseServiceEFC> _localizer;
+        private readonly ILogger<PurchaseServiceEFC> _logger;
         private readonly PurchaseCoreContext _purchaseContext;
 
-        public PurchaseServiceEFC(PurchaseCoreContext ctx) => _purchaseContext = ctx;
+        public PurchaseServiceEFC(PurchaseCoreContext ctx, ILogger<PurchaseServiceEFC> logger,
+            IStringLocalizer<PurchaseServiceEFC> localizer)
+        {
+            _localizer = localizer;
+            _logger = logger;
+            _purchaseContext = ctx;
+        }
 
         public async Task<DetailedPurchaseDTO> GetPurchase(int id)
         {
@@ -62,19 +72,19 @@ namespace Purchase.Core.App
 
         private async Task SaveChanges()
         {
-            // TODO Update exception messages.
-            // TODO Add logging.
             try
             {
                 await _purchaseContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw new ApplicationServiceException("Concurrency update. Please fetch data again.");
+                _logger.LogError(e, "DB concurrency exception.");
+                throw new ApplicationServiceException(_localizer["PurchaseDbUpdateConcurrency"]);
             }
             catch (DbUpdateException e)
             {
-                throw new ApplicationServiceException("Database problem. Please try again.");
+                _logger.LogError(e, "Exception during saving to DB.");
+                throw new ApplicationServiceException(_localizer["PurchaseDbUpdateE"]);
             }
         }
 

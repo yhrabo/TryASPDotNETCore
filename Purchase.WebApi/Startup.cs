@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Purchase.Core.Models;
 using Purchase.Core.App;
+using System.Globalization;
 
 namespace Purchase.WebApi
 {
@@ -30,6 +31,7 @@ namespace Purchase.WebApi
             services.AddDbContext<PurchaseCoreContext>();
             services.AddScoped<ICategoryService, CategoryServiceEFC>();
             services.AddScoped<IPurchaseService, PurchaseServiceEFC>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllers();
         }
 
@@ -40,6 +42,16 @@ namespace Purchase.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US"),
+                SupportedCultures = new CultureInfo[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("uk-UA")
+                }
+            });
 
             app.UseHttpsRedirection();
 

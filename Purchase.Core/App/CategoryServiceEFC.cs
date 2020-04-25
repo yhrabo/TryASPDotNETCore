@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 using Purchase.Core.Infrastructure.DTOs;
 using Purchase.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Purchase.Core.App
 {
     public class CategoryServiceEFC : ICategoryService
     {
+        private readonly ILogger<CategoryServiceEFC> _logger;
         private readonly PurchaseCoreContext _purcaseContext;
 
-        public CategoryServiceEFC(PurchaseCoreContext ctx) => _purcaseContext = ctx;
+        public CategoryServiceEFC(PurchaseCoreContext ctx, ILogger<CategoryServiceEFC> logger)
+        {
+            _logger = logger;
+            _purcaseContext = ctx;
+        }
 
         public async Task<DetailedCategoryDTO> GetCategory(int id)
         {
@@ -61,15 +67,14 @@ namespace Purchase.Core.App
 
         private async Task SaveChanges()
         {
-            // TODO Add logging.
-            // TODO Update exception message.
             try
             {
                 await _purcaseContext.SaveChangesAsync();
             }
             catch (DbUpdateException e)
             {
-                throw new ApplicationServiceException("Database problem. Please try again.");
+                _logger.LogError(e, "Exception during saving to DB.");
+                throw new ApplicationServiceException("DB problem. Please, try again.");
             }
         }
 
