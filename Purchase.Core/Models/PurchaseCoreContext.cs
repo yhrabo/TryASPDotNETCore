@@ -19,6 +19,8 @@ namespace Purchase.Core.Models
                 .HasMaxLength(50).IsRequired();
             modelBuilder.Entity<Purchase>().Property(p => p.Price)
                 .HasColumnType("money");
+            modelBuilder.Entity<Purchase>().Property(p => p.RowVersion)
+                .IsRowVersion();
 
             modelBuilder.Entity<Category>().Property(c => c.Name)
                 .HasMaxLength(50).IsRequired();

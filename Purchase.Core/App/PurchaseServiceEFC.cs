@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Purchase.Core.Infrastructure.DTOs;
 using Purchase.Core.Models;
+using Purchase.Core.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 
@@ -27,14 +28,14 @@ namespace Purchase.Core.App
 
         public async Task<DetailedPurchaseDTO> GetPurchase(int id)
         {
-            var purchase = await _purchaseContext.Purchases.Include(p => p.Category)
+            var purchase = await _purchaseContext.Purchases.GetPurchaseWithCategory()
                 .SingleOrDefaultAsync(p => p.PurchaseId == id);
             return purchase == null ? null : ConvertPurchaseToDetailedPurchaseDTO(purchase);
         }
 
         public async Task<IEnumerable<DetailedPurchaseDTO>> GetPurchases()
         {
-            var purchases = await _purchaseContext.Purchases.Include(p => p.Category).ToListAsync();
+            var purchases = await _purchaseContext.Purchases.GetPurchaseWithCategory().ToListAsync();
             return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p));
         }
 
@@ -97,6 +98,7 @@ namespace Purchase.Core.App
                 Price = purchase.Price,
                 Quantity = purchase.Quantity,
                 DoneAt = purchase.DoneAt,
+                RowVersion = purchase.RowVersion,
                 Category = new DetailedCategoryDTO
                 {
                     CategoryId = purchase.CategoryId,
@@ -115,7 +117,8 @@ namespace Purchase.Core.App
                 Price = purchase.Price,
                 Quantity = purchase.Quantity,
                 DoneAt = purchase.DoneAt,
-                CategoryId = purchase.CategoryId
+                CategoryId = purchase.CategoryId,
+                RowVersion = purchase.RowVersion
             };
         }
     }

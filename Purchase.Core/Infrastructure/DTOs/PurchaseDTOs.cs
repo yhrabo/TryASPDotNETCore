@@ -19,6 +19,7 @@ namespace Purchase.Core.Infrastructure.DTOs
     public class PurchaseDTO : CreatePurchaseDTO
     {
         public int PurchaseId { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 
     public class DetailedPurchaseDTO
@@ -31,5 +32,6 @@ namespace Purchase.Core.Infrastructure.DTOs
         public decimal TotalPrice { get { return Price * Quantity; } }
         public DateTime DoneAt { get; set; }
         public DetailedCategoryDTO Category { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }
