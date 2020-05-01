@@ -53,7 +53,7 @@ namespace Purchase.WebApi.Controllers
         /// <param name="purchaseDTO">Purchase data.</param>
         /// <returns>Created purchase.</returns>
         [HttpPost]
-        public async Task<ActionResult<DetailedPurchaseDTO>> CreatePurchase(CreatePurchaseDTO purchaseDTO)
+        public async Task<ActionResult<PurchaseDTO>> CreatePurchase(CreatePurchaseDTO purchaseDTO)
         {
             var purchase = await _purchaseService.AddPurchase(purchaseDTO);
             return CreatedAtAction(nameof(GetPurchase), new { id = purchase.PurchaseId }, purchase);
