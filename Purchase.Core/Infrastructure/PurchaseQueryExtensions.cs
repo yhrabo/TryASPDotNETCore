@@ -9,7 +9,7 @@ namespace Purchase.Core.Infrastructure
 {
     static class PurchaseQueryExtensions
     {
-        public static IQueryable<Models.Purchase> GetPurchaseWithCategory(
+        internal static IQueryable<Models.Purchase> GetPurchaseWithCategory(
             this IQueryable<Models.Purchase> purchase)
         {
             return purchase.Include(p => p.Category);

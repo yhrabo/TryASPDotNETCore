@@ -12,6 +12,9 @@ using Microsoft.Extensions.Localization;
 
 namespace Purchase.Core.App
 {
+    /// <summary>
+    /// Implements an application service to work with purchases.
+    /// </summary>
     public class PurchaseServiceEFC : IPurchaseService
     {
         private readonly IStringLocalizer<PurchaseServiceEFC> _localizer;
@@ -26,6 +29,9 @@ namespace Purchase.Core.App
             _purchaseContext = ctx;
         }
 
+        /// <summary>
+        /// See <see cref="IPurchaseService.GetPurchase(int)"/>.
+        /// </summary>
         public async Task<DetailedPurchaseDTO> GetPurchase(int id)
         {
             var purchase = await _purchaseContext.Purchases.GetPurchaseWithCategory()
@@ -33,12 +39,22 @@ namespace Purchase.Core.App
             return purchase == null ? null : ConvertPurchaseToDetailedPurchaseDTO(purchase);
         }
 
+        /// <summary>
+        /// See <see cref="IPurchaseService.GetPurchases"/>.
+        /// </summary>
         public async Task<IEnumerable<DetailedPurchaseDTO>> GetPurchases()
         {
             var purchases = await _purchaseContext.Purchases.GetPurchaseWithCategory().ToListAsync();
             return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p));
         }
 
+        /// <summary>
+        /// See <see cref="IPurchaseService.GetPurchase(int)"/>.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown when parameter <paramref name="purchaseDTO"/>
+        /// is null.</exception>
+        /// <exception cref="ApplicationServiceException">Thrown when error is encountered
+        /// while saving to the database.</exception>
         public async Task<PurchaseDTO> AddPurchase(CreatePurchaseDTO purchaseDTO)
         {
             _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));
@@ -48,6 +64,13 @@ namespace Purchase.Core.App
             return ConvertPurchaseToPurchaseDTO((Models.Purchase)purchase.CurrentValues.ToObject());
         }
 
+        /// <summary>
+        /// See <see cref="IPurchaseService.DeletePurchase(int)"/>.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous get operation.
+        /// The task result contains deleted purchase or null if it was not found.</returns>
+        /// <exception cref="ApplicationServiceException">Thrown when error is encountered
+        /// while saving to the database.</exception>
         public async Task<PurchaseDTO> DeletePurchase(int id)
         {
             var purchase = await _purchaseContext.Purchases.FindAsync(id);
@@ -59,6 +82,15 @@ namespace Purchase.Core.App
             return ConvertPurchaseToPurchaseDTO(purchase);
         }
 
+        /// <summary>
+        /// See <see cref="IPurchaseService.EditPurchase(DetailedPurchaseDTO)"/>.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous get operation.
+        /// The task result contains updated purchase or null if it was not found.</returns>
+        /// <exception cref="ApplicationServiceException">Thrown when error is encountered
+        /// while saving to the database.</exception>
+        /// /// <exception cref="ArgumentNullException">Thrown when parameter <paramref name="purchaseDTO"/>
+        /// is null.</exception>
         public async Task<DetailedPurchaseDTO> EditPurchase(DetailedPurchaseDTO purchaseDTO)
         {
             _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));

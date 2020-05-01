@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Purchase.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Purchase.WebApi.Controllers.CategoriesController.GetCategories">
+            <summary>
+            Gets categories.
+            </summary>
+            <returns>Categories.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.CategoriesController.GetCategory(System.Int32)">
+            <summary>
+            Gets a specific category.
+            </summary>
+            <returns>Category.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.CategoriesController.CreateCategory(Purchase.Core.Infrastructure.DTOs.SimpleCategoryDTO)">
+            <summary>
+            Creates a category.
+            </summary>
+            <param name="categoryDTO">Category data.</param>
+            <returns>Created category.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.CategoriesController.ReplaceCategory(System.Int32,Purchase.Core.Infrastructure.DTOs.DetailedCategoryDTO)">
+            <summary>
+            Updates a specific category.
+            </summary>
+            <param name="id">Category ID.</param>
+            <param name="categoryDTO">Category data.</param>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Deletes a specific category.
+            </summary>
+            <param name="id">Category ID.</param>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.GetPurchases">
+            <summary>
+            Gets purchases.
+            </summary>
+            <returns>Purchases.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.GetPurchase(System.Int32)">
+            <summary>
+            Gets a specific purchase.
+            </summary>
+            <param name="id">Purchase ID.</param>
+            <returns>Spefici purchase.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.CreatePurchase(Purchase.Core.Infrastructure.DTOs.CreatePurchaseDTO)">
+            <summary>
+            Creates a purchase.
+            </summary>
+            <param name="purchaseDTO">Purchase data.</param>
+            <returns>Created purchase.</returns>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.ReplacePurchase(System.Int32,Purchase.Core.Infrastructure.DTOs.DetailedPurchaseDTO)">
+            <summary>
+            Updates a specific purchase.
+            </summary>
+            <param name="id">Purchase ID.</param>
+            <param name="purchaseDTO">Purchase data.</param>
+        </member>
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.DeletePurchase(System.Int32)">
+            <summary>
+            Deletes a specific purchase.
+            </summary>
+            <param name="id">Purchase ID.</param>
+            <response code="204">Successful deletion.</response>
+            <response code="404">The purchase was not found.</response>
+        </member>
+    </members>
+</doc>
