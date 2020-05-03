@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.InMemory;
+using Microsoft.EntityFrameworkCore;
 using Purchase.Core.Models;
 using Purchase.Core.App;
 using Microsoft.OpenApi.Models;
@@ -29,7 +31,8 @@ namespace Purchase.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PurchaseCoreContext>();
+            services.AddDbContext<PurchaseCoreContext>(
+                opt => opt.UseInMemoryDatabase("PurchaseAppDatabase"));
             services.AddScoped<ICategoryService, CategoryServiceEFC>();
             services.AddScoped<IPurchaseService, PurchaseServiceEFC>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");

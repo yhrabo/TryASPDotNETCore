@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
+// TODO Consider to add explicit conversion.
 namespace Purchase.Core.Infrastructure.DTOs
 {
     public class CreatePurchaseDTO

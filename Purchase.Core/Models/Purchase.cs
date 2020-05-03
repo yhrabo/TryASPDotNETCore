@@ -6,6 +6,8 @@ using System.Text;
 
 namespace Purchase.Core.Models
 {
+    // TODO Consider to override equal.
+    // TODO Test TotalPrice.
     class Purchase
     {
         public int PurchaseId { get; set; }

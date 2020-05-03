@@ -23,7 +23,7 @@ namespace Purchase.Core.App
         /// </summary>
         /// <returns>A task that represents the asynchronous get operation.
         /// The task result contains retrieved purchases.</returns>
-        public Task<IEnumerable<DetailedPurchaseDTO>> GetPurchases();
+        public Task<ICollection<DetailedPurchaseDTO>> GetPurchases();
         /// <summary>
         /// Asynchronously adds purchase.
         /// </summary>
@@ -44,6 +44,6 @@ namespace Purchase.Core.App
         /// <param name="purchaseDTO">Purchase data.</param>
         /// <returns>A task that represents the asynchronous get operation.
         /// The task result contains updated purchase.</returns>
-        public Task<DetailedPurchaseDTO> EditPurchase(DetailedPurchaseDTO purchaseDTO);
+        public Task<PurchaseDTO> EditPurchase(PurchaseDTO purchaseDTO);
     }
 }

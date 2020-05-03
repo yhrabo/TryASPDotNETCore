@@ -29,10 +29,10 @@ namespace Purchase.Core.App
             return ConvertCategoryToDetailedCategoryDTO(category);
         }
 
-        public async Task<IEnumerable<DetailedCategoryDTO>> GetCategories()
+        public async Task<ICollection<DetailedCategoryDTO>> GetCategories()
         {
             var categories = await _purcaseContext.Categories.ToListAsync();
-            return categories.Select(c => ConvertCategoryToDetailedCategoryDTO(c));
+            return categories.Select(c => ConvertCategoryToDetailedCategoryDTO(c)).ToList();
         }
 
         public async Task<DetailedCategoryDTO> AddCategory(SimpleCategoryDTO categoryDTO)

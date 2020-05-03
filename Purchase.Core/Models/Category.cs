@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Purchase.Core.Models
 {
+    // TODO Override equal.
+    // TODO Name shall be unique.
     class Category
     {
         public int CategoryId { get; set; }

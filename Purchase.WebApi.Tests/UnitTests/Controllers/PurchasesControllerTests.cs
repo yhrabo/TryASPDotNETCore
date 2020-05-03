@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Purchase.WebApi.Tests.UnitTests.Controllers
 {
+    // TODO Change mockPS to stubPs.
     public class PurchasesControllerTests
     {
         [Fact]
@@ -56,7 +57,7 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 10;
-            IEnumerable<DetailedPurchaseDTO> detailedPurchaseDTOs = new DetailedPurchaseDTO[]
+            ICollection<DetailedPurchaseDTO> detailedPurchaseDTOs = new DetailedPurchaseDTO[]
             {
                 new DetailedPurchaseDTO { PurchaseId = 3 },
                 new DetailedPurchaseDTO { PurchaseId = 5 },
@@ -70,7 +71,7 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
             var result = await controller.GetPurchases();
 
             // Assert.
-            var actionResult = Assert.IsType<ActionResult<IEnumerable<DetailedPurchaseDTO>>>(result);
+            var actionResult = Assert.IsType<ActionResult<ICollection<DetailedPurchaseDTO>>>(result);
             var purchases = Assert.IsAssignableFrom<IEnumerable<DetailedPurchaseDTO>>(actionResult.Value);
             Assert.Contains(purchases, p => p.PurchaseId == id);
         }
@@ -102,14 +103,14 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 22;
-            DetailedPurchaseDTO detailedPurchaseDTO = new DetailedPurchaseDTO
+            PurchaseDTO purchaseDTO = new PurchaseDTO
             { PurchaseId = id };
             var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(detailedPurchaseDTO)).ReturnsAsync(detailedPurchaseDTO);
+            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
             var controller = new PurchasesController(mockPS.Object);
 
             // Act.
-            var result = await controller.ReplacePurchase(id, detailedPurchaseDTO);
+            var result = await controller.ReplacePurchase(id, purchaseDTO);
 
             // Assert.
             Assert.IsType<NoContentResult>(result);
@@ -120,14 +121,13 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 22;
-            DetailedPurchaseDTO detailedPurchaseDTO = new DetailedPurchaseDTO
-            { PurchaseId = 23 };
+            PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = 23 };
             var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(detailedPurchaseDTO)).ReturnsAsync(detailedPurchaseDTO);
+            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
             var controller = new PurchasesController(mockPS.Object);
 
             // Act.
-            var result = await controller.ReplacePurchase(id, detailedPurchaseDTO);
+            var result = await controller.ReplacePurchase(id, purchaseDTO);
 
             // Assert.
             Assert.IsType<BadRequestResult>(result);
@@ -138,14 +138,13 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 22;
-            DetailedPurchaseDTO detailedPurchaseDTO = new DetailedPurchaseDTO
-            { PurchaseId = id };
+            PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = id };
             var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(detailedPurchaseDTO)).ReturnsAsync((DetailedPurchaseDTO)null);
+            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync((PurchaseDTO)null);
             var controller = new PurchasesController(mockPS.Object);
 
             // Act.
-            var result = await controller.ReplacePurchase(id, detailedPurchaseDTO);
+            var result = await controller.ReplacePurchase(id, purchaseDTO);
 
             // Assert.
             Assert.IsType<NotFoundResult>(result);

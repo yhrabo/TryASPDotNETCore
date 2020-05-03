@@ -56,7 +56,7 @@
             <param name="purchaseDTO">Purchase data.</param>
             <returns>Created purchase.</returns>
         </member>
-        <member name="M:Purchase.WebApi.Controllers.PurchasesController.ReplacePurchase(System.Int32,Purchase.Core.Infrastructure.DTOs.DetailedPurchaseDTO)">
+        <member name="M:Purchase.WebApi.Controllers.PurchasesController.ReplacePurchase(System.Int32,Purchase.Core.Infrastructure.DTOs.PurchaseDTO)">
             <summary>
             Updates a specific purchase.
             </summary>

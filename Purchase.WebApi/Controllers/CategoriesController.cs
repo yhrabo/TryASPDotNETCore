@@ -27,7 +27,7 @@ namespace Purchase.WebApi.Controllers
         /// </summary>
         /// <returns>Categories.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DetailedCategoryDTO>>> GetCategories()
+        public async Task<ActionResult<ICollection<DetailedCategoryDTO>>> GetCategories()
         {
             return (await _categoryService.GetCategories()).ToList();
         }

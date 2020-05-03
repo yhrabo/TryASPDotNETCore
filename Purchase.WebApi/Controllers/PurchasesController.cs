@@ -27,7 +27,7 @@ namespace Purchase.WebApi.Controllers
         /// </summary>
         /// <returns>Purchases.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DetailedPurchaseDTO>>> GetPurchases()
+        public async Task<ActionResult<ICollection<DetailedPurchaseDTO>>> GetPurchases()
         {
             return (await _purchaseService.GetPurchases()).ToList();
         }
@@ -65,7 +65,7 @@ namespace Purchase.WebApi.Controllers
         /// <param name="id">Purchase ID.</param>
         /// <param name="purchaseDTO">Purchase data.</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> ReplacePurchase(int id, DetailedPurchaseDTO purchaseDTO)
+        public async Task<IActionResult> ReplacePurchase(int id, PurchaseDTO purchaseDTO)
         {
             if (id != purchaseDTO.PurchaseId)
                 return BadRequest();

@@ -42,10 +42,10 @@ namespace Purchase.Core.App
         /// <summary>
         /// See <see cref="IPurchaseService.GetPurchases"/>.
         /// </summary>
-        public async Task<IEnumerable<DetailedPurchaseDTO>> GetPurchases()
+        public async Task<ICollection<DetailedPurchaseDTO>> GetPurchases()
         {
             var purchases = await _purchaseContext.Purchases.GetPurchaseWithCategory().ToListAsync();
-            return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p));
+            return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p)).ToList();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Purchase.Core.App
         }
 
         /// <summary>
-        /// See <see cref="IPurchaseService.EditPurchase(DetailedPurchaseDTO)"/>.
+        /// See <see cref="IPurchaseService.EditPurchase(PurchaseDTO)"/>.
         /// </summary>
         /// <returns>A task that represents the asynchronous get operation.
         /// The task result contains updated purchase or null if it was not found.</returns>
@@ -91,7 +91,7 @@ namespace Purchase.Core.App
         /// while saving to the database.</exception>
         /// /// <exception cref="ArgumentNullException">Thrown when parameter <paramref name="purchaseDTO"/>
         /// is null.</exception>
-        public async Task<DetailedPurchaseDTO> EditPurchase(DetailedPurchaseDTO purchaseDTO)
+        public async Task<PurchaseDTO> EditPurchase(PurchaseDTO purchaseDTO)
         {
             _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));
             var purchase = await _purchaseContext.Purchases.FindAsync(purchaseDTO.PurchaseId);
