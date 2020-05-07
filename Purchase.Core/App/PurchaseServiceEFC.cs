@@ -10,6 +10,7 @@ using Purchase.Core.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 
+// TODO No tracking where applicable.
 namespace Purchase.Core.App
 {
     /// <summary>

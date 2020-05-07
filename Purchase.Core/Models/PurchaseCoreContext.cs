@@ -15,6 +15,8 @@ namespace Purchase.Core.Models
         {
         }
 
+        // TODO Add Category FK as required for Purchase.
+        // TODO Check cascade deletion.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,6 +30,7 @@ namespace Purchase.Core.Models
 
             modelBuilder.Entity<Category>().Property(c => c.Name)
                 .HasMaxLength(50).IsRequired();
+            modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
         }
 
         public void CreateAndSeedDb()
