@@ -27,10 +27,13 @@ namespace Purchase.Core.Models
                 .HasColumnType("money");
             modelBuilder.Entity<Purchase>().Property(p => p.RowVersion)
                 .IsRowVersion();
+            modelBuilder.Entity<Purchase>()
+                .HasIndex(p => new { p.Name, p.DoneAt });
 
             modelBuilder.Entity<Category>().Property(c => c.Name)
                 .HasMaxLength(50).IsRequired();
-            modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.Name).IsUnique();
         }
 
         public void CreateAndSeedDb()
