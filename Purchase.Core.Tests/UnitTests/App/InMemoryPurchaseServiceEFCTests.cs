@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Purchase.Core.Models;
+using Purchase.Core.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;

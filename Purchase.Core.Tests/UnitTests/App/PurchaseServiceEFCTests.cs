@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
-using Purchase.Core.Models;
+using Purchase.Core.Infrastructure;
 using System.Threading.Tasks;
-using Purchase.Core.App;
+using Purchase.Core.ApplicationServices;
 using Moq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
@@ -27,84 +27,76 @@ namespace Purchase.Core.Tests.UnitTests.App
         [Fact]
         public async Task GetPurchase_ValidId_ReturnsPurchase()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                int purchaseId = 2;
-                var stubLogger = new Mock<ILogger<PurchaseServiceEFC>>();
-                var stubLocalizer = new Mock<IStringLocalizer<PurchaseServiceEFC>>();
-                PurchaseServiceEFC purchaseService = new PurchaseServiceEFC(context, 
-                    stubLogger.Object, stubLocalizer.Object);
+            // Arrange.
+            int purchaseId = 2;
+            var stubLogger = new Mock<ILogger<PurchaseServiceEFC>>();
+            var stubLocalizer = new Mock<IStringLocalizer<PurchaseServiceEFC>>();
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = new PurchaseServiceEFC(context,
+                stubLogger.Object, stubLocalizer.Object);
 
-                // Act.
-                DetailedPurchaseDTO purchase = await purchaseService.GetPurchase(purchaseId);
+            // Act.
+            DetailedPurchaseDTO purchase = await purchaseService.GetPurchase(purchaseId);
 
-                // Assert.
-                Assert.Equal(purchaseId, purchase.PurchaseId);
-                Assert.Equal("Violin gathering", purchase.Name);
-                Assert.Equal(200m, purchase.Price);
-                Assert.Equal((uint)2, purchase.Quantity);
-                Assert.Equal(new DateTime(2020, 4, 5, 15, 11, 0), purchase.DoneAt);
-                Assert.Equal(3, purchase.Category.CategoryId);
-            }
+            // Assert.
+            Assert.Equal(purchaseId, purchase.PurchaseId);
+            Assert.Equal("Violin gathering", purchase.Name);
+            Assert.Equal(200m, purchase.Price);
+            Assert.Equal((uint)2, purchase.Quantity);
+            Assert.Equal(new DateTime(2020, 4, 5, 15, 11, 0), purchase.DoneAt);
+            Assert.Equal(3, purchase.Category.CategoryId);
         }
 
         [Fact]
         public async Task GetPurchase_InvalidId_ReturnsNull()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                int purchaseIdNotInDb = 20;
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            int purchaseIdNotInDb = 20;
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act.
-                var purchase = await purchaseService.GetPurchase(purchaseIdNotInDb);
+            // Act.
+            var purchase = await purchaseService.GetPurchase(purchaseIdNotInDb);
 
-                // Assert.
-                Assert.Null(purchase);
-            }
+            // Assert.
+            Assert.Null(purchase);
         }
 
         [Fact]
         public async Task GetPurchases_ReturnsPurchases()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act.
-                var purchases = await purchaseService.GetPurchases();
+            // Act.
+            var purchases = await purchaseService.GetPurchases();
 
-                // Assert.
-                Assert.Equal(5, purchases.Count);
-                var purchase = purchases.First(p => p.PurchaseId == 2);
-                Assert.Equal(2, purchase.PurchaseId);
-                Assert.Equal("Violin gathering", purchase.Name);
-                Assert.Equal(200m, purchase.Price);
-                Assert.Equal((uint)2, purchase.Quantity);
-                Assert.Equal(new DateTime(2020, 4, 5, 15, 11, 0), purchase.DoneAt);
-                Assert.Equal(3, purchase.Category.CategoryId);
-            }
+            // Assert.
+            Assert.Equal(5, purchases.Count);
+            var purchase = purchases.First(p => p.PurchaseId == 2);
+            Assert.Equal(2, purchase.PurchaseId);
+            Assert.Equal("Violin gathering", purchase.Name);
+            Assert.Equal(200m, purchase.Price);
+            Assert.Equal((uint)2, purchase.Quantity);
+            Assert.Equal(new DateTime(2020, 4, 5, 15, 11, 0), purchase.DoneAt);
+            Assert.Equal(3, purchase.Category.CategoryId);
         }
 
         [Fact]
         public async Task GetPurchases_ReturnsEmpty()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            using var context = new PurchaseCoreContext(ContextOptions);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act.
-                var purchases = await purchaseService.GetPurchases();
+            // Act.
+            var purchases = await purchaseService.GetPurchases();
 
-                // Assert.
-                Assert.Equal(0, purchases.Count);
-            }
+            // Assert.
+            Assert.Equal(0, purchases.Count);
         }
 
         [Fact]
@@ -146,15 +138,13 @@ namespace Purchase.Core.Tests.UnitTests.App
         [Fact]
         public async Task AddPurchase_NullArgument_ThrowsArgumentNullException()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act and assert.
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await purchaseService.AddPurchase(null));
-            }
+            // Act and assert.
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await purchaseService.AddPurchase(null));
         }
 
         [Fact]
@@ -195,19 +185,16 @@ namespace Purchase.Core.Tests.UnitTests.App
         [Fact]
         public async Task DeletePurchase_InvalidId_ReturnsNull()
         {
-            // Deletes purchase.
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                int purchaseIdNotInDb = 100;
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            int purchaseIdNotInDb = 100;
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act.
-                var purchase = await purchaseService.DeletePurchase(purchaseIdNotInDb);
+            // Act.
+            var purchase = await purchaseService.DeletePurchase(purchaseIdNotInDb);
 
-                // Arrange.
-                Assert.Null(purchase);
-            }
+            // Arrange.
+            Assert.Null(purchase);
         }
 
         [Fact]
@@ -264,33 +251,30 @@ namespace Purchase.Core.Tests.UnitTests.App
         [Fact]
         public async Task EditPurchase_InvalidId_ReturnsNull()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                int purchaseIdNotInDb = 100;
-                PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = purchaseIdNotInDb };
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            
+            // Arrange.
+            int purchaseIdNotInDb = 100;
+            PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = purchaseIdNotInDb };
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act.
-                var purchase = await purchaseService.EditPurchase(purchaseDTO);
+            // Act.
+            var purchase = await purchaseService.EditPurchase(purchaseDTO);
 
-                // Arrange.
-                Assert.Null(purchase);
-            }
+            // Arrange.
+            Assert.Null(purchase);
         }
 
         [Fact]
         public async Task EditPurchase_NullArgument_ThrowsArgumentNullException()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                // Arrange.
-                PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
+            // Arrange.
+            using var context = new PurchaseCoreContext(ContextOptions);
+            PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
 
-                // Act and assert.
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await purchaseService.EditPurchase(null));
-            }
+            // Act and assert.
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await purchaseService.EditPurchase(null));
         }
 
         protected PurchaseServiceEFC GetDefaultPurchaseServiceEFC(PurchaseCoreContext context)
@@ -303,13 +287,11 @@ namespace Purchase.Core.Tests.UnitTests.App
 
         private void Seed()
         {
-            using (var context = new PurchaseCoreContext(ContextOptions))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                context.CreateAndSeedDb();
-                context.SaveChanges();
-            }
+            using var context = new PurchaseCoreContext(ContextOptions);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.CreateAndSeedDb();
+            context.SaveChanges();
         }
     }
 }

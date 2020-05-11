@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Purchase.Core.App;
+using Purchase.Core.ApplicationServices;
 using Purchase.Core.Infrastructure.DTOs;
-using Purchase.Core.Models;
+using Purchase.Core.Domain.Models;
 using Xunit;
 
 namespace Purchase.Core.Tests.UnitTests.App

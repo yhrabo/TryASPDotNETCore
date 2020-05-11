@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Purchase.Core.Models
+namespace Purchase.Core.Domain.Models
 {
     // TODO Test TotalPrice.
     // TODO Consider to hide properties setter.

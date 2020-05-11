@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Purchase.Core.App
+namespace Purchase.Core.ApplicationServices
 {
     /// <summary>
     /// Represents an application service to work with purchases.

@@ -7,7 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using Purchase.Core.Models;
+using Purchase.Core.Domain.Models;
+using Purchase.Core.Infrastructure;
 
 namespace Purchase.WebApi
 {

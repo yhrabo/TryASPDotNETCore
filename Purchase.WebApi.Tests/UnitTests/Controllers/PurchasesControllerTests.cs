@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Purchase.Core.App;
+using Purchase.Core.ApplicationServices;
 using Purchase.Core.Infrastructure.DTOs;
 using Purchase.WebApi.Controllers;
 using System;

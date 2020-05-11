@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Purchase.Core.App;
+using Purchase.Core.ApplicationServices;
 using Purchase.Core.Infrastructure.DTOs;
 
 namespace Purchase.WebApi.Controllers

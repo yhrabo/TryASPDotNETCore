@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Purchase.Core.Infrastructure.DTOs;
-using Purchase.Core.Models;
+using Purchase.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Purchase.Core.Infrastructure;
 
-namespace Purchase.Core.App
+namespace Purchase.Core.ApplicationServices
 {
     public class CategoryServiceEFC : ICategoryService
     {

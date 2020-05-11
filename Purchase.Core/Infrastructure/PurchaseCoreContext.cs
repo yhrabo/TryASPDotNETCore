@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Purchase.Core.Domain.Models;
 
-namespace Purchase.Core.Models
+namespace Purchase.Core.Infrastructure
 {
     public class PurchaseCoreContext : DbContext
     {
         internal DbSet<Category> Categories { get; set; }
-        internal DbSet<Purchase> Purchases { get; set; }
+        internal DbSet<Domain.Models.Purchase> Purchases { get; set; }
 
         public PurchaseCoreContext(DbContextOptions options) : base(options)
         {
@@ -21,13 +22,13 @@ namespace Purchase.Core.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Purchase>().Property(p => p.Name)
+            modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.Name)
                 .HasMaxLength(50).IsRequired();
-            modelBuilder.Entity<Purchase>().Property(p => p.Price)
+            modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.Price)
                 .HasColumnType("money");
-            modelBuilder.Entity<Purchase>().Property(p => p.RowVersion)
+            modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.RowVersion)
                 .IsRowVersion();
-            modelBuilder.Entity<Purchase>()
+            modelBuilder.Entity<Domain.Models.Purchase>()
                 .HasIndex(p => new { p.Name, p.DoneAt });
 
             modelBuilder.Entity<Category>().Property(c => c.Name)
@@ -49,17 +50,17 @@ namespace Purchase.Core.Models
             Categories.AddRange(categories);
             SaveChanges();
 
-            var purchases = new Purchase[]
+            var purchases = new Domain.Models.Purchase[]
             {
-                new Purchase { Name = "Supermarket", Price = 565.3m, Quantity = 1,
+                new Domain.Models.Purchase { Name = "Supermarket", Price = 565.3m, Quantity = 1,
                     DoneAt = new DateTime(2020, 4, 4, 19, 20, 0), CategoryId = 1 },
-                new Purchase { Name = "Violin gathering", Price = 200m, Quantity = 2,
+                new Domain.Models.Purchase { Name = "Violin gathering", Price = 200m, Quantity = 2,
                     DoneAt = new DateTime(2020, 4, 5, 15, 11, 0), CategoryId = 3 },
-                new Purchase { Name = "Supper", Price = 99.1m, Quantity = 1,
+                new Domain.Models.Purchase { Name = "Supper", Price = 99.1m, Quantity = 1,
                     DoneAt = new DateTime(2020, 4, 7, 20, 2, 3), CategoryId = 1 },
-                new Purchase { Name = "Water bill", Price = 80m, Quantity = 1,
+                new Domain.Models.Purchase { Name = "Water bill", Price = 80m, Quantity = 1,
                     DoneAt = new DateTime(2020, 4, 15, 17, 29, 35), CategoryId = 2 },
-                new Purchase { Name = "Philarmonia Orchestra", Price = 250m, Quantity = 2,
+                new Domain.Models.Purchase { Name = "Philarmonia Orchestra", Price = 250m, Quantity = 2,
                     DoneAt = new DateTime(2020, 4, 17, 9, 31, 0), CategoryId = 3 },
             };
             Purchases.AddRange(purchases);

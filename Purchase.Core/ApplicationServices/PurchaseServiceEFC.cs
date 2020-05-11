@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Purchase.Core.Infrastructure.DTOs;
-using Purchase.Core.Models;
+using Purchase.Core.Domain.Models;
 using Purchase.Core.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 
-namespace Purchase.Core.App
+namespace Purchase.Core.ApplicationServices
 {
     /// <summary>
     /// Implements an application service to work with purchases.
@@ -59,10 +59,10 @@ namespace Purchase.Core.App
         public async Task<PurchaseDTO> AddPurchase(CreatePurchaseDTO purchaseDTO)
         {
             _ = purchaseDTO ?? throw new ArgumentNullException(nameof(purchaseDTO));
-            var purchase = _purchaseContext.Purchases.Add(new Models.Purchase());
+            var purchase = _purchaseContext.Purchases.Add(new Domain.Models.Purchase());
             purchase.CurrentValues.SetValues(purchaseDTO);
             await SaveChanges();
-            return ConvertPurchaseToPurchaseDTO((Models.Purchase)purchase.CurrentValues.ToObject());
+            return ConvertPurchaseToPurchaseDTO((Domain.Models.Purchase)purchase.CurrentValues.ToObject());
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Purchase.Core.App
             }
         }
 
-        private static DetailedPurchaseDTO ConvertPurchaseToDetailedPurchaseDTO(Models.Purchase purchase)
+        private static DetailedPurchaseDTO ConvertPurchaseToDetailedPurchaseDTO(Domain.Models.Purchase purchase)
         {
             return new DetailedPurchaseDTO
             {
@@ -141,7 +141,7 @@ namespace Purchase.Core.App
             };
         }
 
-        private static PurchaseDTO ConvertPurchaseToPurchaseDTO(Models.Purchase purchase)
+        private static PurchaseDTO ConvertPurchaseToPurchaseDTO(Domain.Models.Purchase purchase)
         {
             return new PurchaseDTO
             {

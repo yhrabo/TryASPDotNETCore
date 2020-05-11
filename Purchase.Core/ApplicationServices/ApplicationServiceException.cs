@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Purchase.Core.App
+namespace Purchase.Core.ApplicationServices
 {
     public class ApplicationServiceException : Exception
     {

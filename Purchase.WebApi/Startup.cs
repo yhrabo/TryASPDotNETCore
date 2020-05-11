@@ -12,10 +12,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore;
-using Purchase.Core.Models;
-using Purchase.Core.App;
+using Purchase.Core.Domain.Models;
+using Purchase.Core.ApplicationServices;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
+using Purchase.Core.Infrastructure;
 
 namespace Purchase.WebApi
 {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Purchase.Core.App;
+using Purchase.Core.ApplicationServices;
 using Purchase.Core.Infrastructure.DTOs;
 using Microsoft.AspNetCore.Http;
 
