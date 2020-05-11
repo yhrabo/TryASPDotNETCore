@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Purchase.Core.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Purchase.Core.Infrastructure
 {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Purchase.Core.Domain.Models
+﻿namespace Purchase.Core.Domain.Models
 {
     // TODO Consider to hide properties setter.
     class Category

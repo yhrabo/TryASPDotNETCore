@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Microsoft.EntityFrameworkCore;
-using Purchase.Core.Infrastructure;
-using System.Threading.Tasks;
-using Purchase.Core.ApplicationServices;
-using Moq;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Purchase.Core.ApplicationServices;
+using Purchase.Core.Infrastructure;
 using Purchase.Core.Infrastructure.DTOs;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Purchase.Core.Tests.UnitTests.App
 {
@@ -126,7 +124,7 @@ namespace Purchase.Core.Tests.UnitTests.App
             {
                 // Arrange.
                 PurchaseServiceEFC purchaseService = GetDefaultPurchaseServiceEFC(context);
-                
+
                 // Act.
                 var purchase = await purchaseService.GetPurchase(purchaseId);
 
@@ -251,7 +249,7 @@ namespace Purchase.Core.Tests.UnitTests.App
         [Fact]
         public async Task EditPurchase_InvalidId_ReturnsNull()
         {
-            
+
             // Arrange.
             int purchaseIdNotInDb = 100;
             PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = purchaseIdNotInDb };

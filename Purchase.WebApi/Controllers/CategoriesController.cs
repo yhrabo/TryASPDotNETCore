@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Purchase.Core.ApplicationServices;
+using Purchase.Core.Infrastructure.DTOs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Purchase.Core.ApplicationServices;
-using Purchase.Core.Infrastructure.DTOs;
-using Microsoft.AspNetCore.Http;
 
 namespace Purchase.WebApi.Controllers
 {

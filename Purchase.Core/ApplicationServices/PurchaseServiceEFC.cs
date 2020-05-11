@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Purchase.Core.Infrastructure.DTOs;
-using Purchase.Core.Domain.Models;
-using Purchase.Core.Infrastructure;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Purchase.Core.Infrastructure;
+using Purchase.Core.Infrastructure.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Purchase.Core.ApplicationServices
 {

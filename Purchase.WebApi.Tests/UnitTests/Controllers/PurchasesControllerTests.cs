@@ -5,9 +5,7 @@ using Purchase.Core.Infrastructure.DTOs;
 using Purchase.WebApi.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 using Xunit;
 
 namespace Purchase.WebApi.Tests.UnitTests.Controllers
