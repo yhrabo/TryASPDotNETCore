@@ -10,7 +10,6 @@ using Purchase.Core.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 
-// TODO No tracking where applicable.
 namespace Purchase.Core.App
 {
     /// <summary>
@@ -35,7 +34,7 @@ namespace Purchase.Core.App
         /// </summary>
         public async Task<DetailedPurchaseDTO> GetPurchase(int id)
         {
-            var purchase = await _purchaseContext.Purchases.GetPurchaseWithCategory()
+            var purchase = await _purchaseContext.Purchases.GetPurchaseWithCategory().AsNoTracking()
                 .SingleOrDefaultAsync(p => p.PurchaseId == id);
             return purchase == null ? null : ConvertPurchaseToDetailedPurchaseDTO(purchase);
         }
@@ -45,7 +44,8 @@ namespace Purchase.Core.App
         /// </summary>
         public async Task<ICollection<DetailedPurchaseDTO>> GetPurchases()
         {
-            var purchases = await _purchaseContext.Purchases.GetPurchaseWithCategory().ToListAsync();
+            var purchases = await _purchaseContext.Purchases.GetPurchaseWithCategory()
+                .AsNoTracking().ToListAsync();
             return purchases.Select(p => ConvertPurchaseToDetailedPurchaseDTO(p)).ToList();
         }
 

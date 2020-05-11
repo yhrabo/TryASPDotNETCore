@@ -31,7 +31,7 @@ namespace Purchase.Core.App
 
         public async Task<ICollection<DetailedCategoryDTO>> GetCategories()
         {
-            var categories = await _purcaseContext.Categories.ToListAsync();
+            var categories = await _purcaseContext.Categories.AsNoTracking().ToListAsync();
             return categories.Select(c => ConvertCategoryToDetailedCategoryDTO(c)).ToList();
         }
 
