@@ -2,7 +2,6 @@
 
 namespace Purchase.Core.Domain.Models
 {
-    // TODO Consider to hide properties setter.
     class Purchase
     {
         public int PurchaseId { get; set; }

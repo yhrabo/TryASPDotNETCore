@@ -10,18 +10,17 @@ using Xunit;
 
 namespace Purchase.WebApi.Tests.UnitTests.Controllers
 {
-    // TODO Change mockPS to stubPs.
     public class PurchasesControllerTests
     {
         [Fact]
         public async Task GetPurchase_ValidId_Returns200OkWithPurchase()
         {
             // Arrange.
-            var mockPS = new Mock<IPurchaseService>();
+            var stubPs = new Mock<IPurchaseService>();
             int id = 15;
-            mockPS.Setup(ps => ps.GetPurchase(id)).ReturnsAsync(new DetailedPurchaseDTO
+            stubPs.Setup(ps => ps.GetPurchase(id)).ReturnsAsync(new DetailedPurchaseDTO
             { Name = "New item", PurchaseId = id });
-            var controller = new PurchasesController(mockPS.Object);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.GetPurchase(id);
@@ -37,10 +36,10 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         public async Task GetPurchase_Returns404NotFound()
         {
             // Arrange.
-            var mockPS = new Mock<IPurchaseService>();
+            var stubPs = new Mock<IPurchaseService>();
             int id = 8;
-            mockPS.Setup(ps => ps.GetPurchase(id)).ReturnsAsync((DetailedPurchaseDTO)null);
-            var controller = new PurchasesController(mockPS.Object);
+            stubPs.Setup(ps => ps.GetPurchase(id)).ReturnsAsync((DetailedPurchaseDTO)null);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.GetPurchase(id);
@@ -61,9 +60,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
                 new DetailedPurchaseDTO { PurchaseId = 5 },
                 new DetailedPurchaseDTO { PurchaseId = id }
             };
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.GetPurchases()).ReturnsAsync(detailedPurchaseDTOs);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.GetPurchases()).ReturnsAsync(detailedPurchaseDTOs);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.GetPurchases();
@@ -82,9 +81,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
             { CategoryId = 1, Name = "Item", Price = 27.4m, Quantity = 2, DoneAt = new DateTime() };
             PurchaseDTO purchaseDTO = new PurchaseDTO
             { CategoryId = 1, Name = "Item", Price = 27.4m, Quantity = 2, DoneAt = new DateTime() };
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.AddPurchase(createPurchaseDTO)).ReturnsAsync(purchaseDTO);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.AddPurchase(createPurchaseDTO)).ReturnsAsync(purchaseDTO);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.CreatePurchase(createPurchaseDTO);
@@ -103,9 +102,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
             int id = 22;
             PurchaseDTO purchaseDTO = new PurchaseDTO
             { PurchaseId = id };
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.ReplacePurchase(id, purchaseDTO);
@@ -120,9 +119,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
             // Arrange.
             int id = 22;
             PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = 23 };
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync(purchaseDTO);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.ReplacePurchase(id, purchaseDTO);
@@ -137,9 +136,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
             // Arrange.
             int id = 22;
             PurchaseDTO purchaseDTO = new PurchaseDTO { PurchaseId = id };
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync((PurchaseDTO)null);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.EditPurchase(purchaseDTO)).ReturnsAsync((PurchaseDTO)null);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.ReplacePurchase(id, purchaseDTO);
@@ -153,9 +152,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 2;
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.DeletePurchase(id)).ReturnsAsync(new PurchaseDTO());
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.DeletePurchase(id)).ReturnsAsync(new PurchaseDTO());
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.DeletePurchase(id);
@@ -169,9 +168,9 @@ namespace Purchase.WebApi.Tests.UnitTests.Controllers
         {
             // Arrange.
             int id = 2;
-            var mockPS = new Mock<IPurchaseService>();
-            mockPS.Setup(ps => ps.DeletePurchase(id)).ReturnsAsync((PurchaseDTO)null);
-            var controller = new PurchasesController(mockPS.Object);
+            var stubPs = new Mock<IPurchaseService>();
+            stubPs.Setup(ps => ps.DeletePurchase(id)).ReturnsAsync((PurchaseDTO)null);
+            var controller = new PurchasesController(stubPs.Object);
 
             // Act.
             var result = await controller.DeletePurchase(id);

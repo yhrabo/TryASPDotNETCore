@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-// TODO Consider to add explicit conversion.
 namespace Purchase.Core.Infrastructure.DTOs
 {
     public class CreatePurchaseDTO

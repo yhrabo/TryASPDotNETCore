@@ -1,6 +1,5 @@
 ﻿namespace Purchase.Core.Domain.Models
 {
-    // TODO Consider to hide properties setter.
     class Category
     {
         public int CategoryId { get; set; }
