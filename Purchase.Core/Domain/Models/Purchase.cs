@@ -2,7 +2,6 @@
 
 namespace Purchase.Core.Domain.Models
 {
-    // TODO Test TotalPrice.
     // TODO Consider to hide properties setter.
     class Purchase
     {
