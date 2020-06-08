@@ -12,7 +12,7 @@ namespace Purchase.Core.Domain.Models
         public uint Quantity { get; set; }
         public decimal TotalPrice { get { return Price * Quantity; } }
         public DateTime DoneAt { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
         public byte[] RowVersion { get; set; }
     }

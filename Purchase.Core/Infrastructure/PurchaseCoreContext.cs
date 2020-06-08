@@ -13,20 +13,27 @@ namespace Purchase.Core.Infrastructure
         {
         }
 
-        // TODO Add Category FK as required for Purchase.
-        // TODO Check cascade deletion.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.Name)
-                .HasMaxLength(50).IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
             modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.Price)
                 .HasColumnType("money");
             modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.RowVersion)
                 .IsRowVersion();
+            modelBuilder.Entity<Domain.Models.Purchase>().Property(p => p.CategoryId)
+                .IsRequired(false);
             modelBuilder.Entity<Domain.Models.Purchase>()
-                .HasIndex(p => new { p.Name, p.DoneAt });
+                .HasIndex(p => new { p.Name, p.DoneAt })
+                .IsUnique();
+            modelBuilder.Entity<Domain.Models.Purchase>()
+                .HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Category>().Property(c => c.Name)
                 .HasMaxLength(50).IsRequired();

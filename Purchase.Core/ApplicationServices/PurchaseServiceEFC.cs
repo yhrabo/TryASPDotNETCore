@@ -132,7 +132,7 @@ namespace Purchase.Core.ApplicationServices
                 RowVersion = purchase.RowVersion,
                 Category = new DetailedCategoryDTO
                 {
-                    CategoryId = purchase.CategoryId,
+                    CategoryId = purchase.CategoryId.GetValueOrDefault(),
                     Name = purchase.Category.Name,
                     Description = purchase.Category.Description
                 }
@@ -148,7 +148,7 @@ namespace Purchase.Core.ApplicationServices
                 Price = purchase.Price,
                 Quantity = purchase.Quantity,
                 DoneAt = purchase.DoneAt,
-                CategoryId = purchase.CategoryId,
+                CategoryId = purchase.CategoryId.GetValueOrDefault(),
                 RowVersion = purchase.RowVersion
             };
         }
