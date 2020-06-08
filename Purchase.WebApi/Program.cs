@@ -10,13 +10,7 @@ namespace Purchase.WebApi
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
-                var ctx = scope.ServiceProvider.GetRequiredService<PurchaseCoreContext>();
-                ctx.CreateAndSeedDb();
-            }
-            host.Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
